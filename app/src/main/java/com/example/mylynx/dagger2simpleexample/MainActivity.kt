@@ -2,6 +2,8 @@ package com.example.mylynx.dagger2simpleexample
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.example.mylynx.dagger2simpleexample.ForBraavosModule.Cash
+import com.example.mylynx.dagger2simpleexample.ForBraavosModule.Soldiers
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,10 +20,17 @@ class MainActivity : AppCompatActivity() {
 //        war.prepare()
 //        war.report()
 
-        val component: BattleComponent = DaggerBattleComponent.create()
+        val cash = Cash()
+        val soldiers = Soldiers()
+
+        val component: BattleComponent = DaggerBattleComponent.builder().braavosModule(BraavosModule(cash, soldiers)).build()
         val war = component.getWar()
         war.prepare()
         war.report()
+
+        component.getCash()
+        component.getSoldiers()
+
 
         //playground
         val whiteWalkers = component.getWhiteWalkers()
